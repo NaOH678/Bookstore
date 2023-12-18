@@ -77,7 +77,7 @@ class User(db_conn.DBConn):
 
     def check_password(self, user_id: str, password: str) -> (int, str):
         cursor = self.conn.cursor()
-        sql = 'SELET password FROM user WHERE user_id = %s'
+        sql = 'SELECT password FROM user WHERE user_id = %s'
 
         cursor.execute(sql, (user_id,))
         row = cursor.fetchone()
