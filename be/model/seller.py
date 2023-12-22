@@ -75,13 +75,13 @@ class Seller(db_conn.DBConn):
             cursor.execute("START TRANSACTION")
             cursor.execute(sql, (add_stock_level, store_id, book_id))
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
     
 
@@ -99,13 +99,13 @@ class Seller(db_conn.DBConn):
             cursor.execute("START TRANSACTION")
             cursor.execute(sql, (user_id, store_id))
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
     
 
@@ -136,12 +136,12 @@ class Seller(db_conn.DBConn):
 
             cursor.execute(sql_update_status, (2, order_id))
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
 

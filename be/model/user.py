@@ -107,13 +107,13 @@ class User(db_conn.DBConn):
                 self.conn.rollback()
                 return error.error_authorization_fail() + ("",)
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e)), ""
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e)), ""
+        except Exception as e:
             return 530, "{}".format(str(e)), ""
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
 
         return 200, "ok", token
 
@@ -137,13 +137,13 @@ class User(db_conn.DBConn):
                 return error.error_authorization_fail()
 
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
 
         return 200, "ok"
 
@@ -163,10 +163,10 @@ class User(db_conn.DBConn):
             else:
                 self.conn.rollback()
                 return error.error_authorization_fail()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             return 530, "{}".format(str(e))
         return 200, "ok"
 
@@ -191,9 +191,9 @@ class User(db_conn.DBConn):
                 return error.error_authorization_fail()
 
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             return 530, "{}".format(str(e))
         return 200, "ok"

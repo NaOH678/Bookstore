@@ -54,7 +54,7 @@ def error_invalid_order_id(order_id):
 
 
 def error_not_sufficient_funds(order_id):
-    return 519, error_code[518].format(order_id)
+    return 519, error_code[519].format(order_id)
 
 def error_order_not_paid(order_id):
     return 520, error_code[520].format(order_id)

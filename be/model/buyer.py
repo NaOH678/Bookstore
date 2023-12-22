@@ -5,6 +5,7 @@ from be.model import db_conn
 from be.model import error
 import pymysql
 from datetime import datetime
+from unittest.mock import patch
 
 
 class Buyer(db_conn.DBConn):
@@ -59,19 +60,21 @@ class Buyer(db_conn.DBConn):
 
                 cursor.execute(sql_insert_detail, (uid, book_id, count, price))
 
+            # with patch.object(cursor, 'execute', side_effect=pymysql.Error("Mocked error")):
+            #     cursor.execute("SELECT * FROM your_table")
+
             self.conn.commit()
             order_id = uid
 
-        except pymysql.Error as e:
-            self.conn.rollback()
-            logging.info("528, {}".format(str(e)))
-            return 528, "{}".format(str(e)), ""
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     logging.info("528, {}".format(str(e)))
+        #     return 528, "{}".format(str(e)), ""
+        except Exception as e:
             self.conn.rollback()
             logging.info("530, {}".format(str(e)))
             return 530, "{}".format(str(e)), ""
-        finally:
-            cursor.close()
+        
         return 200, "ok", order_id
                 
 
@@ -142,15 +145,14 @@ class Buyer(db_conn.DBConn):
 
             self.conn.commit()
 
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             self.conn.rollback()
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
 
 
@@ -174,14 +176,14 @@ class Buyer(db_conn.DBConn):
             cursor.execute(sql_change, (add_value, user_id))
 
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             self.conn.rollback()
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
     
 
@@ -247,14 +249,14 @@ class Buyer(db_conn.DBConn):
 
             cursor.execute(sql_update_status, (-1, order_id))
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             self.conn.rollback()
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
 
     def receive_order(self, user_id, password, order_id) -> (int, str):
@@ -292,14 +294,14 @@ class Buyer(db_conn.DBConn):
             cursor.execute(sql_update_status, (3, order_id))
 
             self.conn.commit()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             self.conn.rollback()
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
 
     def search_book(self, keywords, method: str = 'title', store_id: str = None, skip: int = 0):
@@ -324,14 +326,14 @@ class Buyer(db_conn.DBConn):
                 cursor.execute(sql_search, (method, keywords, store_id, skip * limit, limit))
             else:
                 cursor.execute(sql_search, (method, keywords, skip * limit, limit))
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             self.conn.rollback()
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"
 
     def search_order(self, user_id: str, password: str):
@@ -352,12 +354,12 @@ class Buyer(db_conn.DBConn):
             cursor.execute(sql_get_order, (user_id,))
 
             row = cursor.fetchall()
-        except pymysql.Error as e:
-            self.conn.rollback()
-            return 528, "{}".format(str(e))
-        except BaseException as e:
+        # except pymysql.Error as e:
+        #     self.conn.rollback()
+        #     return 528, "{}".format(str(e))
+        except Exception as e:
             self.conn.rollback()
             return 530, "{}".format(str(e))
-        finally:
-            cursor.close()
+        # finally:
+        #     cursor.close()
         return 200, "ok"

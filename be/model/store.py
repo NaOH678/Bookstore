@@ -1,7 +1,7 @@
 import logging
 import os
 import pymysql
-
+import random
 
 class Store:
 
@@ -95,9 +95,11 @@ class Store:
             cursor.execute(sql4)
             cursor.execute(sql5)
             
+            self.conn.commit()
+            
         except pymysql.Error as e:
             logging.error(e)
-            self.rollback()
+            self.conn.rollback()
 
     def get_db_conn(self) -> pymysql.Connection:
         return pymysql.connect(host=self.host, 
