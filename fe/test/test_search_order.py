@@ -43,7 +43,7 @@ class TestPayment:
         code = self.buyer.search_order(self.buyer_id, self.buyer.password)
         assert code != 200
 
-    def test_invalid_user(self):
+    def test_not_exist_user(self):
         self.buyer.user_id = self.buyer.user_id + "_x"
         code = self.buyer.search_order(self.buyer.user_id, self.buyer.password)
         assert code != 200

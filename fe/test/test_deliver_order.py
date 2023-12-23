@@ -51,7 +51,7 @@ class TestDeliverOrder:
         code = self.seller.deliver_order(self.order_id)
         assert code == 200
 
-    def test_invalid_order(self):
+    def test_not_exist_order(self):
         code = self.buyer.add_funds(self.total_price)
         assert code == 200
         code = self.buyer.payment(self.order_id)
@@ -60,7 +60,7 @@ class TestDeliverOrder:
         code = self.seller.deliver_order(self.order_id)
         assert code != 200
 
-    def test_canceled_order(self):
+    def test_has_canceled(self):
         code = self.buyer.add_funds(self.total_price)
         assert code == 200
         code = self.buyer.payment(self.order_id)
@@ -70,13 +70,13 @@ class TestDeliverOrder:
         code = self.seller.deliver_order(self.order_id)
         assert code != 200
 
-    def test_unpaid_order(self):
+    def test_not_pay(self):
         code = self.buyer.add_funds(self.total_price - 1)
         assert code == 200
         code = self.seller.deliver_order(self.order_id)
         assert code != 200
 
-    def test_delivered_order(self):
+    def test_has_delivered(self):
         code = self.buyer.add_funds(self.total_price)
         assert code == 200
         code = self.buyer.payment(self.order_id)

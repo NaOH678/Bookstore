@@ -59,17 +59,17 @@ class TestReceiveOrder:
         code = self.buyer.receive_order(self.order_id)
         assert code != 200
 
-    def test_invalid_user(self):
+    def test_not_exsist_user(self):
         self.buyer.user_id = self.buyer.user_id + "_x"
         code = self.buyer.receive_order(self.order_id)
         assert code != 200
 
-    def test_invalid_order(self):
+    def test_not_exist_order(self):
         self.order_id = self.order_id + '_x'
         code = self.buyer.receive_order(self.order_id)
         assert code != 200
 
-    def test_not_delivered_order(self):
+    def test_not_delivered(self):
         code = self.buyer.add_funds(self.total_price)
         assert code == 200
         code = self.buyer.payment(self.order_id)
@@ -77,11 +77,11 @@ class TestReceiveOrder:
         code = self.buyer.receive_order(self.order_id)
         assert code != 200
 
-    def test_not_paid_order(self):
+    def test_not_pay(self):
         code = self.buyer.receive_order(self.order_id)
         assert code != 200
 
-    def test_canceled_order(self):
+    def test_has_canceled(self):
         code = self.buyer.cancel_order(self.order_id)
         assert code == 200
         code = self.buyer.receive_order(self.order_id)
